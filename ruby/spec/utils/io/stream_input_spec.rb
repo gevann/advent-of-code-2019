@@ -32,6 +32,19 @@ RSpec.describe Utils::Io::StreamInput do
       subject { instance.each }
 
       it { is_expected.to be_a Enumerator }
+
+      it 'reads in the correct chunks' do
+        expect(instance.each.to_a).to eq([1, 2, 3, 4, 5])
+      end
+
+      context 'with a different seperator' do
+        let(:instance) { described_class.new(file_handle: file, sep: ',') }
+        let(:file)     { 'spec/fixtures/io/stream_input_file.csv' }
+
+        it 'reads in the correct chunks' do
+          expect(instance.each.to_a).to eq([1, 22, 333, 4444, 55555])
+        end
+      end
     end
   end
 end
