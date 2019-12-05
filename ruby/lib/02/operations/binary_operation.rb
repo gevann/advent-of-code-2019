@@ -1,7 +1,8 @@
 module Operations
+  N_VALUES = 4
   class BinaryOperation
     def self.call(tape, binary_fn)
-      _opcode, location_a, location_b, location_c = tape.scan(4)
+      _opcode, location_a, location_b, location_c = tape.scan(N_VALUES)
       position = tape.position
 
       tape.move_to(location_a)
