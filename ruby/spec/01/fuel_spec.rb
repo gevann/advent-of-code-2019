@@ -2,7 +2,6 @@ require_relative '../spec_helper'
 
 require '01/fuel'
 require '01/recursive_equation'
-require 'utils/io/stream_input'
 
 RSpec.describe Fuel do
   let(:instance) { described_class.new }
