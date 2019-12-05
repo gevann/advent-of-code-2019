@@ -5,5 +5,9 @@ module Operations
     def self.call(tape)
       BinaryOperation.(tape, lambda { |a, b| a * b })
     end
+
+    def self.evaluate(a, b)
+      a * b
+    end
   end
 end
