@@ -9,6 +9,10 @@ class Tape
     read
   end
 
+  def to_sym
+    self.object_id.to_s.to_sym
+  end
+
   def move_to(location)
     unless location < @upper_boundry && location > @lower_boundry
       raise ArgumentError, 'Location out of bounds'

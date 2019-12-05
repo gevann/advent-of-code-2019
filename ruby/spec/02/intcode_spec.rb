@@ -7,8 +7,35 @@ RSpec.describe Intcode do
   let(:file)     { 'spec/fixtures/02/input_1.csv' }
   let(:instance) { described_class.new }
 
+  describe '#load' do
+    subject { instance.load(stream) }
+
+    it 'loads the tape' do
+      expect(subject).to be_a(Tape)
+    end
+  end
+
+  describe '#set_memory' do
+    let(:loaded_instance) do
+      instance.load(stream)
+      instance
+    end
+
+    subject { loaded_instance.set_memory(99, 0) }
+
+    it 'updates the memory at the address in the tape without moving the position' do
+      expect(subject.tape).to eq([99,9,10,3,2,3,11,0,99,30,40,50])
+      expect(subject.position).to eq(0)
+    end
+  end
+
   describe '#call' do
-    subject { instance.call(stream) }
+    subject { loaded_instance.call }
+
+    let(:loaded_instance) do
+      instance.load(stream)
+      instance
+    end
 
     it 'returns the updated tape' do
       expect(subject).to be_a Tape
@@ -17,6 +44,13 @@ RSpec.describe Intcode do
 
     context 'with a 1202 program alarm input' do
       let(:file) { 'spec/fixtures/02/problem_1.csv' }
+
+      let(:loaded_instance) do
+        instance.load(stream)
+        instance.set_memory(12, 1)
+        instance.set_memory(2, 2)
+        instance
+      end
 
       it 'runs to completion' do
         expect(subject.move_to(0)).to eq(3101878)
