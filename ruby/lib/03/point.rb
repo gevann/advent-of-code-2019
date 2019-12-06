@@ -1,8 +1,10 @@
 class Point
   attr_reader :x, :y
-  def initialize(x, y)
+  attr_accessor :path_position
+  def initialize(x, y, path_position: nil)
     @x = x
     @y = y
+    @path_position = path_position
   end
 
   def translate(motion)

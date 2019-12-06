@@ -6,6 +6,7 @@ require '03/node_map'
 RSpec.describe NodeMap do
   let(:instance) { described_class.new }
   let(:point)    { Point.new(3, 4) }
+  let(:other_point) { Point.new(0, 0) }
 
   describe '.visit' do
     context 'with the same path id' do
@@ -17,6 +18,12 @@ RSpec.describe NodeMap do
         expect(instance[point]).to eq(1)
         instance.visit(point)
         expect(instance[point]).to eq(1)
+      end
+
+      it 'adds the path position to the point' do
+        instance.visit(point)
+        instance.visit(other_point)
+        expect(instance.visit_count(1).last.path_position).to eq(2)
       end
     end
 
