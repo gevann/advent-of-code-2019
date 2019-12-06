@@ -29,6 +29,7 @@ class PasswordFilter
   end
 
   def repeated_digit?(digits)
-    digits.uniq.length < digits.length
+    map = digits.group_by { |e| digits.count(e) }
+    map.fetch(2, false)
   end
 end

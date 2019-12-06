@@ -9,7 +9,7 @@ RSpec.describe PasswordFilter do
   describe '.call' do
     subject { instance.call }
     it 'returns the filtered results' do
-      expect(subject.length).to eq(1890)
+      expect(subject.length).to eq(1277)
     end
   end
 end
