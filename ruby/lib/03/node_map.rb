@@ -10,10 +10,12 @@ class NodeMap
 
   def visit(point)
     @steps += 1
-    point.path_position = @steps
-    unless already_seen_on_path?(point)
-      @points_by_path[point_key(point)].push(path_id)
-      @points_by_count[@visited_by_point[point_key(point)] += 1].push(point)
+    the_point = stored_point(point)
+    the_point.store_path_position(@steps, path_id)
+
+    unless already_seen_on_path?(the_point)
+      @points_by_path[point_key(the_point)].push(path_id)
+      @points_by_count[@visited_by_point[point_key(the_point)] += 1].push(the_point)
     end
   end
 
@@ -31,6 +33,11 @@ class NodeMap
   end
 
   private
+
+  def stored_point(point)
+    @points_by_count[@visited_by_point[point_key(point)]].push(point).
+      detect { |stored_point| stored_point  == point }
+  end
 
   def point_key(point)
     "#{point.x},#{point.y}"

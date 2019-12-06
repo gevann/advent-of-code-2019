@@ -21,9 +21,14 @@ RSpec.describe NodeMap do
       end
 
       it 'adds the path position to the point' do
+        instance.path_id = :id
         instance.visit(point)
         instance.visit(other_point)
-        expect(instance.visit_count(1).last.path_position).to eq(2)
+
+        instance.path_id = :other_id
+        instance.visit(Point.new(3, 4))
+        instance.visit(Point.new(0, 0))
+        expect(instance.visit_count(2).last.path_positions[:id]).to eq(2)
       end
     end
 
