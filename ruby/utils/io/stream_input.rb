@@ -1,5 +1,6 @@
 require 'forwardable'
 require 'utils/converters/string_to_int'
+require 'utils/converters/string_to_string_array'
 
 module Utils
   module Io
