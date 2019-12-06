@@ -15,6 +15,11 @@ RSpec.describe Point do
       let(:motion) { 'D1' }
       it { is_expected.to eq(Point.new(0, -1))}
     end
+
+    context 'when the distance is more than 1 character long' do
+      let(:motion) { 'U120' }
+      it { is_expected.to eq(Point.new(0, 120))}
+    end
   end
 
   describe '.points_in_translation' do

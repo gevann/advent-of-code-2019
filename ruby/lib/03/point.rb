@@ -10,8 +10,10 @@ class Point
   end
 
   def points_in_translation(motion)
-    value = motion.chars.last.to_i
-    dir = motion.chars.first
+    dir = motion[0]
+    str_int = motion[1..-1]
+
+    value = str_int.to_i
 
     (1..value).map { |v| translate("#{dir}#{v}") }
   end
@@ -23,7 +25,8 @@ class Point
   private
 
   def coordinates_for(motion)
-    dir, str_int = motion.chars
+    dir = motion[0]
+    str_int = motion[1..-1]
 
     value = str_int.to_i
 

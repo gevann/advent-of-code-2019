@@ -1,0 +1,34 @@
+class NodeMap
+  attr_accessor :path_id
+
+  def initialize
+    @visited_by_point = Hash.new { |h, k| h[k] = 0 }
+    @points_by_path = Hash.new { |h, k| h[k] = [] }
+    @points_by_count = Hash.new  { |h, k| h[k] = [] }
+  end
+
+  def visit(point)
+    unless already_seen_on_path?(point)
+      @points_by_path[point_key(point)].push(path_id)
+      @points_by_count[@visited_by_point[point_key(point)] += 1].push(point)
+    end
+  end
+
+  def visit_count(count)
+    @points_by_count[count]
+  end
+
+  def [](point)
+    @visited_by_point[point_key(point)]
+  end
+
+  private
+
+  def point_key(point)
+    "#{point.x},#{point.y}"
+  end
+
+  def already_seen_on_path?(point)
+    @points_by_path[point_key(point)].include? path_id
+  end
+end
