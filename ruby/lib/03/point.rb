@@ -1,10 +1,10 @@
 class Point
   attr_reader :x, :y
-  attr_accessor :path_position
-  def initialize(x, y, path_position: nil)
+  attr_accessor :path_positions
+  def initialize(x, y)
     @x = x
     @y = y
-    @path_position = path_position
+    @path_positions = {}
   end
 
   def translate(motion)
@@ -18,6 +18,10 @@ class Point
     value = str_int.to_i
 
     (1..value).map { |v| translate("#{dir}#{v}") }
+  end
+
+  def store_path_position(position, path_id)
+    path_positions[path_id] = position
   end
 
   def ==(other)

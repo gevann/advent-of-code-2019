@@ -37,4 +37,14 @@ RSpec.describe Point do
       ])
     end
   end
+
+  describe '.store_path_position' do
+    let(:instance) { Point.new(0, 0) }
+    subject { instance.store_path_position(10, :x) }
+
+    it 'adds the path position for the path' do
+      subject
+      expect(instance.path_positions[:x]).to eq(10)
+    end
+  end
 end
