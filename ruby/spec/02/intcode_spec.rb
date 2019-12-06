@@ -57,4 +57,14 @@ RSpec.describe Intcode do
       end
     end
   end
+
+  describe '.detect' do
+    subject { Intcode.detect(range, num_vars, target, stream) }
+    let(:range)    { (0..99) }
+    let(:num_vars) { 2 }
+    let(:target)   { 19690720 }
+    let(:file) { 'spec/fixtures/02/problem_1.csv' }
+
+    it { is_expected.to eq([84, 44]) }
+  end
 end

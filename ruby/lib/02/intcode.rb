@@ -35,6 +35,19 @@ class Intcode
     end
   end
 
+  def self.detect(range, num_vars, target, stream)
+    range.
+      to_a.
+      repeated_permutation(num_vars).
+      detect do |(a, b)|
+        instance = new
+        instance.load(stream)
+        instance.set_memory(a, 1)
+        instance.set_memory(b, 2)
+        instance.call.move_to(0) == target
+      end
+  end
+
   private
 
   def run(tape)
