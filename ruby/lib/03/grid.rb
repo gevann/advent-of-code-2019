@@ -28,4 +28,8 @@ class Grid
   def intersections
     @nodemap.visit_count(intersection_count)
   end
+
+  def path_position(point)
+    @nodemap.path_position(point)
+  end
 end

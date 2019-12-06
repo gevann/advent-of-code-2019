@@ -2,6 +2,7 @@ require_relative '../spec_helper'
 
 require '03/grid'
 require '03/distance/manhattan'
+require '03/distance/steps'
 
 RSpec.describe Grid do
   let(:instance) { described_class.new }
@@ -50,6 +51,31 @@ RSpec.describe Grid do
       end.min
 
       expect(min_distance).to eq(135)
+    end
+
+    it 'does the thing' do
+      paths = [
+        "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51".split(","),
+        "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7".split(",")
+      ]
+
+      paths.each { |path| instance.trace(path) }
+
+      min_distance = instance.intersections.map do |point|
+        Distance::Steps.calculate(instance.path_position(point))
+      end.min
+
+      expect(min_distance).to eq(410)
+    end
+
+    it 'returns the intersections with steps' do
+      stream.each { |path| path && instance.trace(path) }
+
+      min_distance = instance.intersections.map do |point|
+        Distance::Steps.calculate(instance.path_position(point))
+      end.min
+
+      expect(min_distance).to eq(13836)
     end
   end
 end

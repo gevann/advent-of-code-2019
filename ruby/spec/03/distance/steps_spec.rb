@@ -5,10 +5,11 @@ require '03/point'
 
 RSpec.describe Distance::Steps do
   describe '.calculate' do
-    subject { described_class.calculate(p1, p2) }
-    let(:p1) { Point.new(0, 0, path_position: 7) }
-    let(:p2) { Point.new(3, 3, path_position: 3) }
+    subject { described_class.calculate(path_positions) }
+    let(:path_positions) do
+      { foo: 11, bar: 12 }
+    end
 
-    it { is_expected.to eq(10) }
+    it { is_expected.to eq(23) }
   end
 end
