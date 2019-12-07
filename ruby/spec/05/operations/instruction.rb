@@ -11,13 +11,16 @@ RSpec.describe Operations::Instruction do
 
     it { is_expected.to be_a(Operations::Instruction) }
 
-    it 'assigned the correct attributes' do
-      expect(subject).to have_attributes(
-        opcode: 2,
-        input_modes: {
-          1 => 0, 2 => 1, 3 => 0
-        }
-      )
+    it 'finds the correct operation' do
+      expect(subject.operator).to eq(Operations::Multiply)
+    end
+
+    context 'when the op code is not recognized' do
+      let(:tape_value) { 1007 }
+
+      it 'defaults to the Exit operation' do
+        expect(subject.operator).to eq(Operations::Exit)
+      end
     end
   end
 end
