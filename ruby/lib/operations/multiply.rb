@@ -2,8 +2,8 @@ require 'operations/binary_operation'
 
 module Operations
   class Multiply < BinaryOperation
-    def self.call(tape)
-      BinaryOperation.(tape, self)
+    def self.call(tape, instruction)
+      BinaryOperation.(tape, instruction)
     end
 
     def self.evaluate(a, b)

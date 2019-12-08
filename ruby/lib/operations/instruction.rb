@@ -27,7 +27,11 @@ module Operations
     end
 
     def operands
-      @input_modes.values.to_enum
+      @operands ||= @input_modes.values.to_enum
+    end
+
+    def execute(tape)
+      operator.call(tape, self)
     end
   end
 end

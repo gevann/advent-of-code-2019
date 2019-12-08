@@ -1,6 +1,6 @@
 module Operations
   class Exit
-    def self.call(_tape)
+    def self.call(*args)
       exit
     end
   end
