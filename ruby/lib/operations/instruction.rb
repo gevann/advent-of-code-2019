@@ -4,7 +4,7 @@ require 'operations'
 
 module Operations
   class Instruction
-    attr_reader :opcode, :input_modes, :operator
+    attr_reader :opcode, :operator
 
     EXIT = 'Exit'.freeze
 
@@ -18,8 +18,16 @@ module Operations
 
       @opcode_map = ::YAML.load_file(opcode_lang)
       @opcode = (d*10) + e
-      @input_modes = { 1 => c, 2 => b, 3 => a}
+      @input_modes = {
+        1 => INPUT_MODES.fetch(c),
+        2 => INPUT_MODES.fetch(b),
+        3 => INPUT_MODES.fetch(a),
+      }
       @operator = Operations.const_get(@opcode_map.fetch(@opcode, EXIT))
+    end
+
+    def operands
+      @input_modes.values.to_enum
     end
   end
 end
