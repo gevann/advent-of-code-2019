@@ -12,7 +12,7 @@ RSpec.describe Operations::Output do
 
     it 'writes to value to the output stream' do
       expect(output_stream).
-        to receive(:print).with('test')
+        to receive(:print).with("test\n")
 
       subject
     end

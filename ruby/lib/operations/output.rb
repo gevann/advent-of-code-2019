@@ -6,7 +6,7 @@ module Operations
       position = tape.position
 
       value = tape.move_to(location)
-      output_stream.print(value)
+      output_stream.print("#{value}\n")
 
       tape.move_to(position + 1)
       tape
