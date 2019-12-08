@@ -1,7 +1,7 @@
 module Operations
-  N_VALUES = 2
   class Output
-    def self.call(tape, output_stream: $stdout)
+    N_VALUES = 2
+    def self.call(tape, _instruction, output_stream: $stdout)
       _opcode, location = tape.scan(N_VALUES)
       position = tape.position
 
