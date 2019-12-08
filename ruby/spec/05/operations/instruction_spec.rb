@@ -4,7 +4,8 @@ require 'operations/instruction'
 require 'tape'
 
 RSpec.describe Operations::Instruction do
-  let(:instance)   { described_class.new(tape_value) }
+  let(:instance)   { described_class.new(tape_value, opcode_map) }
+  let(:opcode_map) { {1 => 'Add', 2 => 'Multiply' } }
   let(:tape_value) { 1002 }
 
   describe '.new' do

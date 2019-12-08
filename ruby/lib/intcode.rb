@@ -51,8 +51,7 @@ class Intcode
   private
 
   def run(tape)
-    instruction = Operations::Instruction.new(tape.value)
-    #operation = Operations.const_get(@opcode_map.fetch(tape.value, EXIT))
+    instruction = Operations::Instruction.new(tape.value, @opcode_map)
     run(instruction.execute(tape))
   rescue SystemExit
     tape
