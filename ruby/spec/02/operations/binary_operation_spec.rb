@@ -8,8 +8,9 @@ require 'tape'
 RSpec.describe Operations::BinaryOperation do
   let(:tape)        { Tape.new(arr) }
   let(:arr)         { [1, 0, 0, 0, 99] }
-  let(:instruction) { Operations::Instruction.new(value)}
+  let(:instruction) { Operations::Instruction.new(value, opcode_map)}
   let(:value)       { tape.value }
+  let(:opcode_map)  { {1 => 'Add', 2 => 'Multiply' } }
 
   describe '.call' do
     subject { Operations::BinaryOperation.call(tape, instruction) }

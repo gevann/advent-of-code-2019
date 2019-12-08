@@ -1,6 +1,6 @@
 module Operations
-  N_VALUES = 4
   class BinaryOperation
+    N_VALUES = 4
     def self.call(tape, instruction)
       _opcode, location_a, location_b, location_c = tape.scan(N_VALUES)
       position = tape.position
