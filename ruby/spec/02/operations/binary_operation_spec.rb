@@ -1,8 +1,8 @@
 require_relative '../../spec_helper'
 
-require '02/operations/binary_operation'
-require '02/operations/add'
-require '02/tape'
+require 'operations/binary_operation'
+require 'operations/add'
+require 'tape'
 
 RSpec.describe Operations::BinaryOperation do
   let(:tape)      { Tape.new(arr) }
