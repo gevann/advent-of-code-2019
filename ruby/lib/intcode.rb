@@ -2,8 +2,8 @@ require 'yaml'
 
 require 'utils/memoized_results'
 
-require '02/operations'
-require '02/tape'
+require 'operations'
+require 'tape'
 
 class Intcode
   include MemoizedResults

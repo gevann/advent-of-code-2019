@@ -1,6 +1,6 @@
 require 'yaml'
 
-require '02/operations'
+require 'operations'
 
 module Operations
   class Instruction

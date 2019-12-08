@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-require '02/tape'
+require 'tape'
 
 RSpec.describe Tape do
   let(:instance) { described_class.new(arr) }

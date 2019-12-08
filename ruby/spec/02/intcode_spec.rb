@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-require '02/intcode'
+require 'intcode'
 
 RSpec.describe Intcode do
   let(:stream)   { Utils::Io::StreamInput.new(file_handle: file, sep: ',') }

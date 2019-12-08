@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-require '05/operations/instruction'
+require 'operations/instruction'
 
 RSpec.describe Operations::Instruction do
   let(:instance)   { described_class.new(tape_value) }

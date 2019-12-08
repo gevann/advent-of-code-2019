@@ -1,4 +1,4 @@
-require '02/operations/binary_operation'
+require 'operations/binary_operation'
 
 module Operations
   class Add < BinaryOperation
