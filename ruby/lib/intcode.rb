@@ -11,8 +11,15 @@ class Intcode
 
   EXIT = 'Exit'.freeze
 
-  def initialize(opcode_lang = 'spec/fixtures/02/opcode_lang.yml')
+  attr_reader :output
+
+  def initialize(opcode_lang = 'spec/fixtures/02/opcode_lang.yml', output = $stdout)
     @opcode_map = ::YAML.load_file(opcode_lang)
+    @output = output
+  end
+
+  def outputs
+    @output.to_a
   end
 
   def load(stream)
@@ -51,7 +58,7 @@ class Intcode
   private
 
   def run(tape)
-    instruction = Operations::Instruction.new(tape.value, @opcode_map)
+    instruction = Operations::Instruction.new(tape.value, @opcode_map, @output)
     run(instruction.execute(tape))
   rescue SystemExit
     tape
