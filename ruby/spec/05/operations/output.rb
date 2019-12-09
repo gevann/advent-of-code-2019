@@ -5,7 +5,7 @@ require 'tape'
 
 RSpec.describe Operations::Output do
   describe '.call' do
-    subject { described_class.call(tape, output_stream: output_stream) }
+    subject { described_class.call(tape, :foo, output_stream) }
     let(:tape) { Tape.new(arr) }
     let(:arr)  { [1, 3, 3, 'test'] }
     let(:output_stream) { double('output', print: 'foo') }

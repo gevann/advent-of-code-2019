@@ -2,7 +2,7 @@ require 'operations/binary_operation'
 
 module Operations
   class Add < BinaryOperation
-    def self.call(tape, instruction)
+    def self.call(tape, instruction, _output_stream)
       BinaryOperation.(tape, instruction)
     end
 

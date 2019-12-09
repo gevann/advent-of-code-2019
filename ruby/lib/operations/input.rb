@@ -1,7 +1,7 @@
 module Operations
   class Input
     N_VALUES = 2
-    def self.call(tape, _instruction)
+    def self.call(tape, _instruction, _output_stream)
       _opcode, location = tape.scan(N_VALUES)
       position = tape.position
 

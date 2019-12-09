@@ -13,10 +13,11 @@ module Operations
       1 => lambda { |_tape, value| value }
     }
 
-    def initialize(tape_value, opcode_map)
+    def initialize(tape_value, opcode_map, output_stream = $stdout)
       a, b, c, d, e = ('%05i' % tape_value).split('').map(&:to_i)
 
       @opcode_map = opcode_map
+      @output_stream = output_stream
       @opcode = (d*10) + e
       @input_modes = {
         1 => INPUT_MODES.fetch(c),
@@ -31,7 +32,7 @@ module Operations
     end
 
     def execute(tape)
-      operator.call(tape, self)
+      operator.call(tape, self, @output_stream)
     end
   end
 end

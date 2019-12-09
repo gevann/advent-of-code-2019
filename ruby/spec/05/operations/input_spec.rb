@@ -5,7 +5,7 @@ require 'tape'
 
 RSpec.describe Operations::Input do
   describe '.call' do
-    subject { described_class.call(tape) }
+    subject { described_class.call(tape, :foo, :bar) }
     let(:tape) { Tape.new(arr) }
     let(:arr)  { [1, 3, 3, 4] }
 
