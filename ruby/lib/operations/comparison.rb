@@ -7,11 +7,10 @@ module Operations
 
       value_a = instruction.operands.next.(tape, location_a)
       value_b = instruction.operands.next.(tape, location_b)
-      value_c = instruction.operands.next.(tape, location_c)
 
       tape.write(
         instruction.operator.evaluate(value_a, value_b),
-        value_c
+        location_c
       )
 
       tape.move_to(position + 1)

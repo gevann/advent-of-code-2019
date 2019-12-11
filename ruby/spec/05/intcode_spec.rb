@@ -25,8 +25,11 @@ RSpec.describe Intcode do
   let(:output_stream) { OutputArray.new }
 
   before do
-    allow(Operations::Input).to receive(:gets).and_return('1')
+    allow(Operations::Input).to receive(:gets).and_return(input.to_s)
   end
+
+  let(:input) { 1 }
+
   let(:loaded_instance) do
     instance.load(stream)
     instance
@@ -41,6 +44,50 @@ RSpec.describe Intcode do
       expect(instance.outputs).to eq([1])
     end
 
+    context 'with a program than checks if the input equals 8' do
+      let(:stream) { [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8] }
+
+      context 'when it does not' do
+        let(:input) { 5 }
+
+        it 'outputs Operations::FALSE' do
+          subject
+          expect(instance.outputs.first).to eq(Operations::FALSE)
+        end
+      end
+
+      context 'when it does' do
+        let(:input) { 8 }
+
+        it 'outputs Operations::TRUE' do
+          subject
+          expect(instance.outputs.first).to eq(Operations::TRUE)
+        end
+      end
+    end
+
+    context 'with a program that checks if the input is less than 8, using immediate mode' do
+      let(:stream) { [3, 3, 1107, -1, 8, 3, 4, 3, 99] }
+
+      context 'when it is not' do
+        let(:input) { 8 }
+
+        it 'outputs Operations::FALSE' do
+          subject
+          expect(instance.outputs.first).to eq(Operations::FALSE)
+        end
+      end
+
+      context 'when it is' do
+        let(:input) { 7 }
+
+        it 'outputs Operations::TRUE' do
+          subject
+          expect(instance.outputs.first).to eq(Operations::TRUE)
+        end
+      end
+    end
+
     context 'diagnostics' do
       let(:file) { 'spec/fixtures/05/problem_1.csv' }
 
@@ -48,6 +95,15 @@ RSpec.describe Intcode do
         subject.move_to(0)
         expect(instance.outputs[0...-1].all?(&:zero?)).to eq(true)
         expect(instance.outputs[-1]).to eq(15259545)
+      end
+
+      context 'with input of the thermal radiator controller (5)' do
+        let(:input) { 5 }
+
+        it 'runs to completion' do
+          subject.move_to(0)
+          expect(instance.outputs[-1]).to eq(7616021)
+        end
       end
     end
   end

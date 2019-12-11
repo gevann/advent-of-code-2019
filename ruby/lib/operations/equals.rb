@@ -1,5 +1,9 @@
 module Operations
   module Equals
+    def self.call(tape, instruction, expression)
+      Comparison.call(tape, instruction, expression)
+    end
+
     def self.evaluate(x, y)
       if x == y
         Operations::TRUE
