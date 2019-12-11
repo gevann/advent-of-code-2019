@@ -2,4 +2,8 @@
 2: Multiply
 3: Input
 4: Output
+5: JumpIfTrue
+6: JumpIfFalse
+7: LessThan
+8: Equals
 99: Exit
