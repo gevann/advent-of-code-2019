@@ -13,5 +13,5 @@ require 'operations/output'
 
 module Operations
   const_set(:TRUE, 1)
-  const_set(:FALSE, 1)
+  const_set(:FALSE, 0)
 end
