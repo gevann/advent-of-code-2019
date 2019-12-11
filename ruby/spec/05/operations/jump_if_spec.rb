@@ -1,9 +1,6 @@
 require_relative '../../spec_helper'
 
-require 'operations/jump_if'
-require 'operations/jump_if_true'
-require 'operations/jump_if_false'
-require 'operations/instruction'
+require 'operations'
 require 'tape'
 
 RSpec.describe Operations::JumpIf do
