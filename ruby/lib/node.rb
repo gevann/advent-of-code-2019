@@ -17,5 +17,6 @@ class Node
     collection = Array(nodes)
     directly_adjacent_nodes.concat(collection)
     @directly_adjacent_node_count += collection.length
+    self
   end
 end
