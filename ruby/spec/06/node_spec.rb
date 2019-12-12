@@ -34,4 +34,14 @@ RSpec.describe Node do
         from(0).to(1)
     end
   end
+
+  describe '#increment_indirect_count' do
+    subject        { instance.increment_indirect_count }
+    let(:instance) { described_class.new(name: :COM)   }
+
+    it 'increments the count' do
+      expect { subject }.
+        to change { instance.indirectly_adjacent_node_count }.by(1)
+    end
+  end
 end

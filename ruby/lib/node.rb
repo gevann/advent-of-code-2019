@@ -19,4 +19,9 @@ class Node
     @directly_adjacent_node_count += collection.length
     self
   end
+
+  def increment_indirect_count
+    @indirectly_adjacent_node_count += 1
+    self
+  end
 end
