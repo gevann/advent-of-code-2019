@@ -22,4 +22,27 @@ RSpec.describe Graph do
       expect( subject.map(&:name) ).to eq([:COM, :A1, :B1, :D1])
     end
   end
+
+  describe "insert_edge" do
+    subject        { edges.each { |tuple| instance.insert_edge(*tuple) } }
+    let(:instance) { Graph.new(root)      }
+    let(:root)     { Node.new(name: :COM) }
+    let(:edges) do
+      [
+        [:COM,:B],
+        [:B,:C],
+        [:C,:D],
+        [:D,:E],
+        [:E,:F],
+        [:B,:G],
+        [:G,:H],
+        [:D,:I],
+        [:E,:J],
+        [:J,:K],
+        [:K,:L],
+      ]
+    end
+
+    it { binding.pry }
+  end
 end
