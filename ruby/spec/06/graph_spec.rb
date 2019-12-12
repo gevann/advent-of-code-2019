@@ -43,6 +43,9 @@ RSpec.describe Graph do
       ]
     end
 
-    it { binding.pry }
+    it 'updates the orbit count on insertion' do
+      subject
+      expect(instance.orbit_count).to eq(42)
+    end
   end
 end

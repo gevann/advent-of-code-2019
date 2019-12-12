@@ -1,10 +1,11 @@
 require 'node'
 
 class Graph
-  attr_reader :root
+  attr_reader :root, :orbit_count
 
   def initialize(root)
     @root = root
+    @orbit_count = 0
   end
 
   def insert_edge(from, to)
@@ -12,6 +13,10 @@ class Graph
     new_node = Node.new(name: to)
     node.add_nodes(new_node)
     path.map { |entry| entry.increment_indirect_count }
+
+    @orbit_count += path.length + 1
+
+    self
   end
 
   def dfs(name, node, path = [])
