@@ -17,6 +17,28 @@ RSpec.describe Node do
     end
   end
 
+  describe '.dfs_count' do
+    subject { described_class.dfs_count(instance) }
+
+    context 'without children' do
+      let(:instance) { Node.new(name: :COM) }
+      it { is_expected.to eq(0) }
+
+      context 'with children' do
+        let(:instance) { Node.new(name: :COM).add_nodes(bnodes) }
+        let(:bnodes) do
+          [
+            Node.new(name: :B1),
+            Node.new(name: :B2).add_nodes(cnodes),
+          ]
+        end
+        let(:cnodes) { Node.new(name: :C1) }
+
+        it { is_expected.to eq(3) }
+      end
+    end
+  end
+
   describe '#add_nodes' do
     subject        { instance.add_nodes(node)        }
     let(:instance) { described_class.new(name: :COM) }

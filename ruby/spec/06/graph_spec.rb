@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 require 'graph'
 
 RSpec.describe Graph do
-  let(:instance) { Graph.new(root) }
+  let(:instance) { Graph.new }
   let(:root)     { Node.new(name: :COM).add_nodes(anodes)  }
   let(:anodes) do
     [
@@ -15,37 +15,24 @@ RSpec.describe Graph do
   let(:cnodes) { Node.new(name: :C1) }
   let(:dnodes) { Node.new(name: :D1) }
 
-  describe "#dfs" do
-    subject { instance.dfs(:D1, root, [root]) }
-
-    it 'returns the path to the node' do
-      expect( subject.map(&:name) ).to eq([:COM, :A1, :B1, :D1])
+  describe "#count_orbits" do
+    before do
+      stream.each do |tuple|
+        instance.insert_edge(*tuple)
+      end
     end
-  end
+    subject        { instance.count_orbits }
+    let(:instance) { Graph.new      }
 
-  describe "insert_edge" do
-    subject        { edges.each { |tuple| instance.insert_edge(*tuple) } }
-    let(:instance) { Graph.new(root)      }
-    let(:root)     { Node.new(name: :COM) }
-    let(:edges) do
-      [
-        [:COM,:B],
-        [:B,:C],
-        [:C,:D],
-        [:D,:E],
-        [:E,:F],
-        [:B,:G],
-        [:G,:H],
-        [:D,:I],
-        [:E,:J],
-        [:J,:K],
-        [:K,:L],
-      ]
+    let(:instance) { Graph.new }
+    let(:root) { Node.new(name: :COM) }
+    let(:stream) do
+      Utils::Io::StreamInput.new(
+        file_handle: 'spec/fixtures/06/problem_1.csv',
+        converter: Utils::Converters::StringToSymbolArray.new
+      )
     end
 
-    it 'updates the orbit count on insertion' do
-      subject
-      expect(instance.orbit_count).to eq(42)
-    end
+    it { is_expected.to eq(249308) }
   end
 end

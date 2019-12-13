@@ -24,4 +24,21 @@ class Node
     @indirectly_adjacent_node_count += 1
     self
   end
+
+  def children
+    directly_adjacent_nodes
+  end
+
+  def self.dfs_count(node)
+    stack = []
+    stack.push(node)
+    count = -1
+
+    while stack.any?
+      v = stack.pop
+      count += 1
+      v.children.each { |edge| stack.push(edge) }
+    end
+    count
+  end
 end
