@@ -11,6 +11,7 @@ class Graph
 
   def insert_edge(from, to)
     adjacency_list[from].add(to)
+    adjacency_list[to].add(from)
     self
   end
 
@@ -79,11 +80,5 @@ class Graph
         end
       end
     end
-  end
-
-  private
-
-  def merge_trees(node)
-    roots.delete(node)
   end
 end

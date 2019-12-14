@@ -19,7 +19,9 @@ RSpec.describe Graph do
   end
 
   describe '#BFS' do
-    subject { instance.BFS(from: :COM, to: :SAN).flat_map(&:name) }
+    subject { instance.BFS(from: source, to: target).flat_map(&:name) }
+    let(:source) { :COM }
+    let(:target) { :SAN }
     let(:stream) do
       [
         [:COM, :B],
@@ -38,6 +40,11 @@ RSpec.describe Graph do
       ]
     end
     it { is_expected.to eq([:COM, :B, :C, :D, :I, :SAN]) }
+
+    context 'when search from not the COM' do
+      let(:source) { :YOU }
+      it { is_expected.to eq([:YOU, :K, :J, :E, :D, :I, :SAN]) }
+    end
   end
 
   describe "#count_orbits" do
