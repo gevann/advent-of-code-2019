@@ -58,21 +58,23 @@ class Graph
     end
   end
 
-  def BFS(name:, start_node:)
+  def BFS(from:, to:)
     queue   = []
-    queue.push(start_node)
-    visited = Set[start_node]
+    queue.push(Node.new(name: from))
+    visited = Set[from]
 
     while queue.any?
       node = queue.shift
 
-      if node.name == name
+      if node.name == to
         return node
       else
-        node.children.each do |child|
+        adjacency_list[node.name].each do |child|
           unless visited.include? child
-            child.parent = node
-            queue.push(child)
+            visited.add(child)
+            child_node = Node.new(name: child)
+            child_node.parent = node
+            queue.push(child_node)
           end
         end
       end
