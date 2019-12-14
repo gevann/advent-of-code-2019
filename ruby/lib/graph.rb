@@ -2,35 +2,15 @@ require 'node'
 require 'set'
 
 class Graph
-  attr_reader :roots, :orbit_count
+  attr_reader :roots, :orbit_count, :adjacency_list
 
   def initialize
-    @roots = Set.new
     @orbit_count = 0
+    @adjacency_list = Hash.new { |h, k| h[k] = Set.new }
   end
 
   def insert_edge(from, to)
-    *from_path, from_node = roots.detect do |root|
-      path = dfs(name: from, node: root)
-      if path&.any?
-        break(path)
-      end
-    end
-
-    if from_node.nil?
-      from_node = Node.new(name: from)
-      roots.add(from_node)
-    end
-
-    *to_path, to_node = roots.find do |root|
-      dfs(name: to, node: root)
-    end
-    to_node ||= Node.new(name: to)
-
-    from_node.add_children(to_node)
-
-    merge_trees(to_node)
-
+    adjacency_list[from].add(to)
     self
   end
 
