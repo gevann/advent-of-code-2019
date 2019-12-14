@@ -47,7 +47,19 @@ class Graph
     @orbit_count
   end
 
-#1  procedure DFS-iterative(G,v):
+  def distance(from:, to:)
+    from_node = BFS(name: from, start_node: roots.first)
+    to_node = BFS(name: to, start_node: roots.first)
+
+    f = from_node.flat_map {|e| e.name }
+    f.pop
+    t = to_node.flat_map { |e| e.name }
+    t.pop
+
+    shared_length = f.zip(t).select {|a, b| a == b}.length
+    f.length + t.length - 2 * shared_length
+  end
+
   def dfs(name:, node:)
     stack = []
     stack.push(node)
@@ -62,6 +74,27 @@ class Graph
       end
       v.children.each do |edge|
         stack.push(edge)
+      end
+    end
+  end
+
+  def BFS(name:, start_node:)
+    queue   = []
+    queue.push(start_node)
+    visited = Set[start_node]
+
+    while queue.any?
+      node = queue.shift
+
+      if node.name == name
+        return node
+      else
+        node.children.each do |child|
+          unless visited.include? child
+            child.parent = node
+            queue.push(child)
+          end
+        end
       end
     end
   end

@@ -4,35 +4,28 @@ require 'graph'
 
 RSpec.describe Graph do
   let(:instance) { Graph.new }
-  let(:root)     { Node.new(name: :COM).add_nodes(anodes)  }
-  let(:anodes) do
-    [
-      Node.new(name: :A1).add_nodes(bnodes),
-      Node.new(name: :A2).add_nodes(cnodes),
-    ]
+  let(:root) { Node.new(name: :COM) }
+
+  before do
+    stream.each do |tuple|
+      instance.insert_edge(*tuple)
+    end
   end
-  let(:bnodes) { Node.new(name: :B1).add_nodes(dnodes) }
-  let(:cnodes) { Node.new(name: :C1) }
-  let(:dnodes) { Node.new(name: :D1) }
+  let(:stream) do
+    Utils::Io::StreamInput.new(
+      file_handle: 'spec/fixtures/06/problem_1.csv',
+      converter: Utils::Converters::StringToSymbolArray.new
+    )
+  end
 
   describe "#count_orbits" do
-    before do
-      stream.each do |tuple|
-        instance.insert_edge(*tuple)
-      end
-    end
-    subject        { instance.count_orbits }
-    let(:instance) { Graph.new      }
-
-    let(:instance) { Graph.new }
-    let(:root) { Node.new(name: :COM) }
-    let(:stream) do
-      Utils::Io::StreamInput.new(
-        file_handle: 'spec/fixtures/06/problem_1.csv',
-        converter: Utils::Converters::StringToSymbolArray.new
-      )
-    end
-
+    subject { instance.count_orbits }
     it { is_expected.to eq(249308) }
+  end
+
+  describe '#distance' do
+    subject { instance.distance(from: :SAN, to: :YOU) }
+
+    it { is_expected.to eq(349) }
   end
 end

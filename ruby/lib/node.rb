@@ -12,6 +12,19 @@ class Node
     children.any?
   end
 
+  def flat_map
+    return enum_for :flat_map unless block_given?
+
+    helper = lambda do |node, acc|
+      if node.parent
+        helper.(node.parent, [(yield node)] + acc)
+      else
+        [(yield node)] + acc
+      end
+    end
+    helper.(self, [])
+  end
+
   def add_children(nodes)
     collection = Array(nodes)
     children.concat(collection)
