@@ -16,38 +16,13 @@ class Graph
   end
 
   def count_orbits
-    node = roots.first
-    stack = []
-    stack.push(node)
-
-    while stack.any?
-      v = stack.pop
-      @orbit_count += Node.dfs_count(v)
-      v.children.each { |edge| stack.push(edge) }
+    adjacency_list.keys.inject(0) do |acc, from|
+      acc + BFS(from: from, to: :COM).flat_map(&:name).length - 1
     end
-    @orbit_count
   end
 
   def distance(from:, to:)
     BFS(from: from, to: to).flat_map(&:name).length - 3
-  end
-
-  def dfs(name:, node:)
-    stack = []
-    stack.push(node)
-    current_path = []
-
-    while stack.any?
-      v = stack.pop
-      current_path.push(v)
-
-      if v.name == name
-        return current_path
-      end
-      v.children.each do |edge|
-        stack.push(edge)
-      end
-    end
   end
 
   def BFS(from:, to:)
