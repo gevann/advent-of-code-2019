@@ -1,32 +1,21 @@
 class Node
-  attr_reader(
-    :name,
-    :directly_adjacent_nodes,
-    :directly_adjacent_node_count,
-    :indirectly_adjacent_node_count
-  )
+  attr_reader(:name, :children)
+  attr_accessor(:parent)
 
   def initialize(name:)
-    @name                           = name
-    @directly_adjacent_nodes        = []
-    @directly_adjacent_node_count   = 0
-    @indirectly_adjacent_node_count = 0
+    @name     = name
+    @children = []
+    @parent   = nil
   end
 
-  def add_nodes(nodes)
+  def leaf?
+    children.any?
+  end
+
+  def add_children(nodes)
     collection = Array(nodes)
-    directly_adjacent_nodes.concat(collection)
-    @directly_adjacent_node_count += collection.length
+    children.concat(collection)
     self
-  end
-
-  def increment_indirect_count
-    @indirectly_adjacent_node_count += 1
-    self
-  end
-
-  def children
-    directly_adjacent_nodes
   end
 
   def self.dfs_count(node)

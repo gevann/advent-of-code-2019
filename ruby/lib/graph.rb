@@ -27,7 +27,7 @@ class Graph
     end
     to_node ||= Node.new(name: to)
 
-    from_node.add_nodes(to_node)
+    from_node.add_children(to_node)
 
     merge_trees(to_node)
 
@@ -60,7 +60,9 @@ class Graph
       if v.name == name
         return current_path
       end
-      v.children.each { |edge| stack.push(edge) }
+      v.children.each do |edge|
+        stack.push(edge)
+      end
     end
   end
 
