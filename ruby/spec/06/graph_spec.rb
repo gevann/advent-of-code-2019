@@ -18,6 +18,21 @@ RSpec.describe Graph do
     )
   end
 
+  describe '#root' do
+    subject { instance.root(:F) }
+    let(:stream) do
+      [
+        [:A, :B],
+        [:A, :C],
+        [:D, :E],
+        [:D, :F],
+        [:C, :D],
+      ]
+    end
+
+    it { is_expected.to eq(:A) }
+  end
+
   describe '#BFS' do
     subject { instance.BFS(from: source, to: target).flat_map(&:name) }
     let(:source) { :COM }
@@ -39,6 +54,7 @@ RSpec.describe Graph do
         [:I, :SAN],
       ]
     end
+
     it { is_expected.to eq([:COM, :B, :C, :D, :I, :SAN]) }
 
     context 'when search from not the COM' do

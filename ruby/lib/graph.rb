@@ -2,17 +2,30 @@ require 'node'
 require 'set'
 
 class Graph
-  attr_reader :roots, :orbit_count, :adjacency_list
+  attr_reader :orbit_count, :adjacency_list, :orbits
 
   def initialize
     @orbit_count = 0
     @adjacency_list = Hash.new { |h, k| h[k] = Set.new }
+    @roots = Hash.new { |h, k| h[k] = k }
   end
 
   def insert_edge(from, to)
+    roots[to] = roots[from]
     adjacency_list[from].add(to)
     adjacency_list[to].add(from)
     self
+  end
+
+  def root(sym)
+    helper = lambda do |node|
+      if roots[node] == node
+        node
+      else
+        roots[node] = helper.(roots[node])
+      end
+    end
+    helper.(sym)
   end
 
   def count_orbits
@@ -47,4 +60,8 @@ class Graph
       end
     end
   end
+
+  private
+
+  attr_reader :roots
 end
