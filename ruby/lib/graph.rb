@@ -2,12 +2,12 @@ require 'node'
 require 'set'
 
 class Graph
-  attr_reader :orbit_count, :adjacency_list, :orbits
+  attr_reader :adjacency_list, :orbits_by_com
 
   def initialize
-    @orbit_count = 0
     @adjacency_list = Hash.new { |h, k| h[k] = Set.new }
     @roots = Hash.new { |h, k| h[k] = k }
+    @orbits_by_com = {}
   end
 
   def insert_edge(from, to)
@@ -28,9 +28,20 @@ class Graph
     helper.(sym)
   end
 
-  def count_orbits
-    adjacency_list.keys.inject(0) do |acc, from|
-      acc + BFS(from: from, to: :COM).flat_map(&:name).length - 1
+  def count_orbits(com = :COM)
+    orbits_by_com[com] ||=
+      dist_to_root = {}
+      adjacency_list.keys.sort_by{ |k| adjacency_list[k].size}.inject(0) do |acc, from|
+      if dist_to_root[from].nil?
+        path = BFS(from: from, to: com).flat_map(&:name)
+        len = path.length - 1
+
+        path.each_with_index do |sym, idx|
+          break if dist_to_root[sym]
+          dist_to_root[sym] = len - idx
+        end
+      end
+      acc + dist_to_root[from]
     end
   end
 
